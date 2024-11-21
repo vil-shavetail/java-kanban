@@ -1,3 +1,5 @@
+package ru.yandex.practicum.tasks;
+
 import java.util.Objects;
 
 public class Task {
@@ -11,8 +13,8 @@ public class Task {
         this.status = status;
     }
 
-    public Task(String title, String description) {
-        this.id = TaskManager.getId();
+    public Task(Integer id, String title, String description) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.status = TaskStatus.NEW;
