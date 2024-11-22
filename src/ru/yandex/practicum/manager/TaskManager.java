@@ -7,6 +7,7 @@ import ru.yandex.practicum.tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class TaskManager {
@@ -137,10 +138,8 @@ public class TaskManager {
 
     public void deleteAllEpics() {
         if(!epics.isEmpty()) {
-            if(!subtasks.isEmpty()) {
-                deleteAllSubtasks();
-            }
             epics.clear();
+            subtasks.clear();
         }
     }
 
@@ -186,6 +185,31 @@ public class TaskManager {
             subtask = null;
         }
         return subtask;
+    }
+
+    public List<Task> getAListOfTasks() {
+        return new ArrayList<>(tasks.values());
+    }
+
+    public List<Epic> getAListOfEpics() {
+        return new ArrayList<>(epics.values());
+    }
+
+    public List<Subtask> getAListOfSubtask() {
+        return new ArrayList<>(subtasks.values());
+    }
+
+    public List<Subtask> getAListOfEpicSubtasks(Epic epic) {
+        ArrayList<Subtask> aListOfEpicSubtasks = new ArrayList<>();
+        if(Objects.nonNull(epic)) {
+            if (!epic.getSubs().isEmpty()) {
+                ArrayList<Integer> subs = epic.getSubs();
+                for (int key : subs) {
+                    aListOfEpicSubtasks.add(subtasks.get(key));
+                }
+            }
+        }
+        return aListOfEpicSubtasks;
     }
 
     public void printTasks() {

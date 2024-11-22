@@ -76,9 +76,23 @@ public class Main {
         Task taskOne = tm.createTask(new Task("ТЗ-4", "Реализация технического задания четвертого спринта"));
         Epic epicOne = tm.createEpic(new Epic("Переезд", "Большая задача по перезду"));
         Subtask subtaskOne = tm.createSubtask(new Subtask("Подготовка", "Подготовка к пеерезду", 14));
+        Subtask subtaskTwo = tm.createSubtask(new Subtask("Транспортировка", "Транспортировка вещей к новому месту", 14));
+        Task taskTwo = tm.createTask(new Task("ТЗ-3", "Реализация технического задания третьего спринта"));
         System.out.println(taskOne.toString());
+        System.out.println(taskTwo.toString());
+        System.out.println();
         System.out.println(epicOne.toString());
+        System.out.println();
         System.out.println(subtaskOne.toString());
+        System.out.println(subtaskTwo.toString());
+        System.out.println();
+        System.out.println(tm.getAListOfTasks());
+        System.out.println();
+        System.out.println(tm.getAListOfEpics());
+        System.out.println();
+        System.out.println(tm.getAListOfSubtask());
+        System.out.println();
+        System.out.println(tm.getAListOfEpicSubtasks(epicOne));
         System.out.println("Демонстрация функционала завершена!");
     }
 }
