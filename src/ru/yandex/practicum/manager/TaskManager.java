@@ -17,26 +17,26 @@ public class TaskManager {
     private final HashMap<Integer, Epic> epics = new HashMap<>();
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
-    public int getId() {
-        return id;
-    }
 
-    public void create(Task task) {
-        tasks.put(id, task);
+    public Task createTask(Task task) {
+        tasks.put(task.setId(id), task);
         id++;
+        return task;
     }
 
-    public void create(Epic epic) {
-        epics.put(id, epic);
+    public Epic createEpic(Epic epic) {
+        epics.put(epic.setId(id), epic);
         id++;
+        return epic;
     }
 
-    public void create(Subtask subtask) {
-        subtasks.put(id, subtask);
+    public Subtask createSubtask(Subtask subtask) {
+        subtasks.put(subtask.setId(id), subtask);
         Epic epic = epics.get(subtask.getEpicId());
         epic.getSubs().add(id);
         id++;
         modifyEpicStatus(getEpicById(subtask.getEpicId()));
+        return subtask;
     }
 
     public void update(Task task) {
@@ -45,9 +45,9 @@ public class TaskManager {
             System.out.println("Обновление невозможно!");
         } else {
             if(prevTask.getId() == task.getId() &&
-                prevTask.getTitle().equals(task.getTitle()) &&
-                prevTask.getDescription().equals(task.getDescription()) &&
-                !prevTask.getStatus().equals(task.getStatus())) {
+                (!prevTask.getTitle().equals(task.getTitle()) ||
+                !prevTask.getDescription().equals(task.getDescription()) ||
+                !prevTask.getStatus().equals(task.getStatus()))) {
                 tasks.put(task.getId(), task);
                 System.out.println("Задача с идентификатором - " + task.getId() + " успешно обновлена!");
             } else {
@@ -62,9 +62,10 @@ public class TaskManager {
             System.out.println("Обновление невозможно!");
         } else {
             if(prevEpic.getId() == epic.getId() &&
-                    prevEpic.getTitle().equals(epic.getTitle()) &&
-                    prevEpic.getDescription().equals(epic.getDescription()) &&
-                    !prevEpic.getStatus().equals(epic.getStatus())) {
+                    (!prevEpic.getTitle().equals(epic.getTitle()) ||
+                    !prevEpic.getDescription().equals(epic.getDescription()) ||
+                    !prevEpic.getStatus().equals(epic.getStatus()) ||
+                    !prevEpic.getSubs().equals(epic.getSubs()))) {
                 epics.put(epic.getId(), epic);
                 System.out.println("Эпик с идентификатором - " + epic.getId() + " успешно обновлена!");
             } else {
@@ -79,9 +80,10 @@ public class TaskManager {
             System.out.println("Обновление невозможно!");
         } else {
             if(prevSubtask.getId() == subtask.getId() &&
-                prevSubtask.getTitle().equals(subtask.getTitle()) &&
-                prevSubtask.getDescription().equals(subtask.getDescription()) &&
-                !prevSubtask.getStatus().equals(subtask.getStatus())) {
+                (!prevSubtask.getTitle().equals(subtask.getTitle()) ||
+                !prevSubtask.getDescription().equals(subtask.getDescription()) ||
+                !prevSubtask.getStatus().equals(subtask.getStatus()) ||
+                prevSubtask.getEpicId() != subtask.getEpicId())) {
                 subtasks.put(subtask.getId(), subtask);
                 modifyEpicStatus(getEpicById(subtask.getEpicId()));
                 System.out.println("Подзадача с идентификатором - " + subtask.getId() + " успешно обновлена!");
@@ -135,10 +137,10 @@ public class TaskManager {
 
     public void deleteAllEpics() {
         if(!epics.isEmpty()) {
-            epics.clear();
             if(!subtasks.isEmpty()) {
                 deleteAllSubtasks();
             }
+            epics.clear();
         }
     }
 

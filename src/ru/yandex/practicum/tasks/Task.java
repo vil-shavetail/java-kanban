@@ -4,17 +4,12 @@ import java.util.Objects;
 
 public class Task {
 
-    private final int id;
+    private int id;
     private final String title;
     private final String description;
     private TaskStatus status;
 
-    public void setStatus(TaskStatus status) {
-        this.status = status;
-    }
-
-    public Task(Integer id, String title, String description) {
-        this.id = id;
+    public Task(String title, String description) {
         this.title = title;
         this.description = description;
         this.status = TaskStatus.NEW;
@@ -43,6 +38,15 @@ public class Task {
         return status;
     }
 
+    public int setId(int id) {
+        this.id = id;
+        return id;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -54,5 +58,15 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
