@@ -1,3 +1,4 @@
+import ru.yandex.practicum.manager.Managers;
 import ru.yandex.practicum.manager.TaskManager;
 import ru.yandex.practicum.tasks.Epic;
 import ru.yandex.practicum.tasks.Subtask;
@@ -10,9 +11,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        TaskManager tm  = Managers.getDefault();
         ArrayList<Integer> sub = new ArrayList<>();
         sub.add(3);
-        TaskManager tm = new TaskManager();
         tm.createTask(new Task("ТЗ-4", "Реализация технического задания четвертого спринта"));
         tm.createEpic(new Epic("Переезд", "Большая задача по перезду"));
         tm.createSubtask(new Subtask("Подготовка", "Подготовка к пеерезду", 2));
@@ -94,5 +95,6 @@ public class Main {
         System.out.println();
         System.out.println(tm.getAListOfEpicSubtasks(epicOne));
         System.out.println("Демонстрация функционала завершена!");
+        System.out.println(tm.getHistory());
     }
 }
