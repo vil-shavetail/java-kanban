@@ -1,5 +1,5 @@
-import ru.yandex.practicum.manager.Managers;
-import ru.yandex.practicum.manager.TaskManager;
+import ru.yandex.practicum.managers.Managers;
+import ru.yandex.practicum.managers.TaskManager;
 import ru.yandex.practicum.tasks.Epic;
 import ru.yandex.practicum.tasks.Subtask;
 import ru.yandex.practicum.tasks.Task;
