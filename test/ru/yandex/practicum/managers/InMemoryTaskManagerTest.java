@@ -113,16 +113,22 @@ class InMemoryTaskManagerTest {
         Assertions.assertEquals(0, taskManager.getAListOfEpics().size());
         taskManager.deleteAllTasks();
         Assertions.assertEquals(0, taskManager.getAListOfTasks().size());
+        Assertions.assertEquals(0, taskManager.getHistory().size());
 
     }
 
     @Test
-    void getAllTypeOfTasksById() {
+    void getAllTypeOfTasksByIdAndCheckHistory() {
+        Assertions.assertEquals(2, taskManager.getHistory().size(), "Epic wasn't add " +
+                "to history in the @BeforeEach method createTasksOfAllTypes");
+        taskManager.getHistory().clear();
         Assertions.assertEquals("ТЗ-3", taskManager.getTaskById(1).getTitle());
         Assertions.assertEquals("Переезд", taskManager.getEpicById(2).getTitle());
         Assertions.assertEquals("Подготовка", taskManager.getSubtaskById(3).getTitle());
         Assertions.assertEquals("Траспортировка", taskManager.getSubtaskById(4).getTitle());
         Assertions.assertEquals("ТЗ-4", taskManager.getTaskById(5).getTitle());
+        Assertions.assertEquals(5, taskManager.getHistory().size());
+
     }
 
 }

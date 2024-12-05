@@ -5,18 +5,15 @@ import ru.yandex.practicum.tasks.Subtask;
 import ru.yandex.practicum.tasks.Task;
 import ru.yandex.practicum.tasks.TaskStatus;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
     private int id = 1;
 
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final Map<Integer, Subtask> subtasks = new HashMap<>();
 
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
@@ -106,6 +103,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteTaskById(int id) {
         if(!tasks.isEmpty() && tasks.containsKey(id)) {
             tasks.remove(id);
+            removeTaskFromHistoryById(id);
         } else {
             System.out.println("Задача с идентификатором " + id + ", отсуствует в списке задач." +
                     "Удаление невозможно!");
@@ -122,6 +120,7 @@ public class InMemoryTaskManager implements TaskManager {
                 }
             }
             epics.remove(id);
+            removeTaskFromHistoryById(id);
         } else {
             System.out.println("Эпик с идентификатором " + id + ", отсуствует в списке задач." +
                     "Удаление невозможно!");
@@ -133,6 +132,7 @@ public class InMemoryTaskManager implements TaskManager {
         if(!subtasks.isEmpty() && subtasks.containsKey(id)) {
             int epicId = subtasks.get(id).getEpicId();
             subtasks.remove(id);
+            removeTaskFromHistoryById(id);
             epics.get(epicId).getSubs().remove((Integer) id);
             modifyEpicStatus(getEpicById(epicId));
         } else {
@@ -141,10 +141,35 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    public void removeTaskFromHistoryById(int id) {
+        if(!historyManager.getHistory().isEmpty()){
+            for(int index = 0; index < historyManager.getHistory().size(); index++) {
+                if(historyManager.getHistory().get(index).getId() == id) {
+                    historyManager.getHistory().remove(index);
+                }
+            }
+        }
+    }
+
+    public void removeTaskFromHistory(){
+        if(!historyManager.getHistory().isEmpty()){
+            for(int index = 0; index < historyManager.getHistory().size(); index++) {
+                if (historyManager.getHistory().get(index) instanceof Task) {
+                    historyManager.getHistory().remove(index);
+                } else if (historyManager.getHistory().get(index) instanceof Epic) {
+                    historyManager.getHistory().remove(index);
+                } else if (historyManager.getHistory().get(index) instanceof Subtask) {
+                    historyManager.getHistory().remove(index);
+                }
+            }
+        }
+    }
+
     @Override
     public void deleteAllTasks() {
         if(!tasks.isEmpty()) {
             tasks.clear();
+            removeTaskFromHistory();
         }
     }
 
@@ -153,6 +178,7 @@ public class InMemoryTaskManager implements TaskManager {
         if(!epics.isEmpty()) {
             epics.clear();
             subtasks.clear();
+            removeTaskFromHistory();
         }
     }
 
@@ -165,6 +191,7 @@ public class InMemoryTaskManager implements TaskManager {
                 modifyEpicStatus(getEpicById(epicId));
             }
             subtasks.clear();
+            removeTaskFromHistory();
         }
     }
 
