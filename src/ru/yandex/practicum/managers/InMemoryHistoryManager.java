@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager {
 
     private static class HandMadeHistoryLinkedList {
         private final Map<Integer, Node> data = new HashMap<>();
@@ -18,11 +18,11 @@ public class InMemoryHistoryManager implements HistoryManager{
             Node node = new Node();
             node.setTask(task);
 
-            if(data.containsKey(task.getId())) {
+            if (data.containsKey(task.getId())) {
                 removeNode(data.get(task.getId()));
             }
 
-            if(head == null) {
+            if (head == null) {
                 tail = node;
                 head = node;
                 node.setNext(null);
@@ -48,7 +48,7 @@ public class InMemoryHistoryManager implements HistoryManager{
         }
 
         private void removeNode(Node node) {
-            if(node != null) {
+            if (node != null) {
                 data.remove(node.getTask().getId());
                 Node previous = node.getPrevious();
                 Node next = node.getNext();
