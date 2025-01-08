@@ -72,7 +72,7 @@ public class InMemoryTaskManager implements TaskManager {
                     !prevEpic.getStatus().equals(epic.getStatus()) ||
                     !prevEpic.getSubs().equals(epic.getSubs()))) {
                 epics.put(epic.getId(), epic);
-                System.out.println("Эпик с идентификатором - " + epic.getId() + " успешно обновлена!");
+                System.out.println("Эпик с идентификатором - " + epic.getId() + " успешно обновлен!");
             } else {
                 System.out.println("Объекты идентичны. Нечего обновлять!");
             }

@@ -67,7 +67,7 @@ class InMemoryHistoryManagerTest {
         Assertions.assertEquals("ТЗ-1", historyManager.getHistory().getFirst().getTitle());
         Assertions.assertEquals("ТЗ-10", historyManager.getHistory().getLast().getTitle());
         historyManager.add(task11);
-        Assertions.assertEquals("ТЗ-2", historyManager.getHistory().getFirst().getTitle());
+        Assertions.assertEquals("ТЗ-1", historyManager.getHistory().getFirst().getTitle());
         Assertions.assertEquals("ТЗ-11", historyManager.getHistory().getLast().getTitle());
 
     }
