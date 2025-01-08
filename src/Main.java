@@ -66,7 +66,7 @@ public class Main {
         tm.deleteAllEpics();
         System.out.println();
         tm.printTasksOfAllTypes();
-        tm.createEpic(new Epic( "Переезд", "Большая задача по перезду"));
+        tm.createEpic(new Epic("Переезд", "Большая задача по перезду"));
         tm.createSubtask(new Subtask("Подготовка", "Подготовка к пеерезду", 10));
         tm.createSubtask(new Subtask("Траспортировка", "Перевоз вещей", 10));
         System.out.println();
