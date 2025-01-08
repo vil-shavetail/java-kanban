@@ -142,7 +142,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     public void removeTaskFromHistoryById(int id) {
-        if (!historyManager.getHistory().isEmpty()){
+        if (!historyManager.getHistory().isEmpty()) {
             for (int index = 0; index < historyManager.getHistory().size(); index++) {
                 if (historyManager.getHistory().get(index).getId() == id) {
                     historyManager.getHistory().remove(index);
@@ -363,7 +363,7 @@ public class InMemoryTaskManager implements TaskManager {
             }
             if (countThree != 0) {
                 epic.setStatus(TaskStatus.IN_PROGRESS);
-            } else if (countOne !=0 && countTwo !=0) {
+            } else if (countOne != 0 && countTwo != 0) {
                 epic.setStatus(TaskStatus.IN_PROGRESS);
             } else if (countOne != 0) {
                 epic.setStatus(TaskStatus.NEW);
