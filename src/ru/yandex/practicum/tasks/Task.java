@@ -52,7 +52,7 @@ public class Task {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Task task = (Task) obj;
-        return id == task.id ;
+        return id == task.id;
     }
 
     @Override
