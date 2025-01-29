@@ -1,5 +1,4 @@
 import ru.yandex.practicum.managers.FileBackedTaskManager;
-import ru.yandex.practicum.managers.HistoryManager;
 import ru.yandex.practicum.managers.Managers;
 import ru.yandex.practicum.managers.TaskManager;
 import ru.yandex.practicum.tasks.Epic;
@@ -8,15 +7,12 @@ import ru.yandex.practicum.tasks.Task;
 import ru.yandex.practicum.tasks.TaskStatus;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-import static java.io.File.createTempFile;
-
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         TaskManager tm  = Managers.getDefault();
         ArrayList<Integer> sub = new ArrayList<>();
