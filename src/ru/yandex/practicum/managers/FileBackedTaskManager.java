@@ -30,20 +30,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
         try (FileWriter fileWriter = new FileWriter(String.valueOf(file), StandardCharsets.UTF_8);
              BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-             bufferedWriter.write("id,type,name,status,description,epic");
-             bufferedWriter.newLine();
+            bufferedWriter.write("id,type,name,status,description,epic");
+            bufferedWriter.newLine();
 
-             for (Task task : getAListOfTasks()) {
-                 bufferedWriter.write(toString(task));
-                 bufferedWriter.newLine();
-             }
+            for (Task task : getAListOfTasks()) {
+                bufferedWriter.write(toString(task));
+                bufferedWriter.newLine();
+            }
 
-             for (Epic epic: getAListOfEpics()) {
-                 bufferedWriter.write(toString(epic));
-                 bufferedWriter.newLine();
-             }
+            for (Epic epic : getAListOfEpics()) {
+                bufferedWriter.write(toString(epic));
+                bufferedWriter.newLine();
+            }
 
-            for (Subtask subtask: getAListOfSubtask()) {
+            for (Subtask subtask : getAListOfSubtask()) {
                 bufferedWriter.write(toString(subtask));
                 bufferedWriter.newLine();
             }
@@ -66,10 +66,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 if (line.isEmpty()) {
                     break;
                 }
-                if(!line.equals("id,type,name,status,description,epic")) {
+                if (!line.equals("id,type,name,status,description,epic")) {
                     Task task = fromString(line);
 
-                    if(task instanceof Epic) {
+                    if (task instanceof Epic) {
                         createEpic((Epic) task);
                     } else if (task instanceof Subtask) {
                         createSubtask((Subtask) task);
