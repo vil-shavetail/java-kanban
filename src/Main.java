@@ -1,3 +1,5 @@
+import ru.yandex.practicum.managers.FileBackedTaskManager;
+import ru.yandex.practicum.managers.HistoryManager;
 import ru.yandex.practicum.managers.Managers;
 import ru.yandex.practicum.managers.TaskManager;
 import ru.yandex.practicum.tasks.Epic;
@@ -5,11 +7,16 @@ import ru.yandex.practicum.tasks.Subtask;
 import ru.yandex.practicum.tasks.Task;
 import ru.yandex.practicum.tasks.TaskStatus;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
+
+import static java.io.File.createTempFile;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         TaskManager tm  = Managers.getDefault();
         ArrayList<Integer> sub = new ArrayList<>();
@@ -96,5 +103,14 @@ public class Main {
         System.out.println(tm.getAListOfEpicSubtasks(epicOne));
         System.out.println("Демонстрация функционала завершена!");
         System.out.println(tm.getHistory());
+
+        Path path = Path.of("tasks.csv");
+        FileBackedTaskManager fbtm = new FileBackedTaskManager(Managers.getDefaultHistory());
+        System.out.println("We are at the step one: " + fbtm.getAListOfTasks());
+        Task first = fbtm.createTask(new Task("ТЗ-4", "Реализация технического задания четвертого спринта"));
+        fbtm.loadFromFile(new File(String.valueOf(path)));
+        System.out.println("We are at the step three" + fbtm.getAListOfTasks());
+        System.out.println("Task: " + fbtm.getTaskById(first.getId()));
+        System.out.println("History: " + fbtm.getHistory());
     }
 }
