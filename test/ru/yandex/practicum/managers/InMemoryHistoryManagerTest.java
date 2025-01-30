@@ -12,7 +12,7 @@ class InMemoryHistoryManagerTest {
 
     @BeforeEach
     void createManagers() {
-        taskManager = Managers.getDefault();
+        taskManager = Managers.getDefault(historyManager);
         historyManager = Managers.getDefaultHistory();
     }
 

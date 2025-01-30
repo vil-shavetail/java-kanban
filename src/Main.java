@@ -1,4 +1,5 @@
 import ru.yandex.practicum.managers.FileBackedTaskManager;
+import ru.yandex.practicum.managers.HistoryManager;
 import ru.yandex.practicum.managers.Managers;
 import ru.yandex.practicum.managers.TaskManager;
 import ru.yandex.practicum.tasks.Epic;
@@ -14,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        TaskManager tm  = Managers.getDefault();
+        TaskManager tm  = Managers.getDefault(Managers.getDefaultHistory());
         ArrayList<Integer> sub = new ArrayList<>();
         sub.add(3);
         tm.createTask(new Task("ТЗ-4", "Реализация технического задания четвертого спринта"));

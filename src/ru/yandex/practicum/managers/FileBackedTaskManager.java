@@ -11,11 +11,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    private final HistoryManager historyManager;
 
     public FileBackedTaskManager(HistoryManager historyManager) {
-        this.historyManager = historyManager;
-
+        super(historyManager);
     }
 
     public void save() {
