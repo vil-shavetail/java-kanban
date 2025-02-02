@@ -75,7 +75,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         fileBackedTaskManager.createEpic((Epic) task);
                     } else if (task instanceof Subtask) {
                         fileBackedTaskManager.createSubtask((Subtask) task);
-                    } else if (task instanceof Task){
+                    } else if (task instanceof Task) {
                         fileBackedTaskManager.createTask(task);
                     } else {
                         String historyLine = bufferedReader.readLine();
