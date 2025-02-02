@@ -5,30 +5,34 @@ import ru.yandex.practicum.tasks.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
-    public FileBackedTaskManager(HistoryManager historyManager) {
+    private static HistoryManager historyManager;
+    private final File file;
+    private static final String HEADER = "id,type,name,status,description,epic";
+
+    public FileBackedTaskManager(HistoryManager historyManager, File file) {
         super(historyManager);
+        FileBackedTaskManager.historyManager = historyManager;
+        this.file = file;
     }
 
     public void save() {
-        Path file = Path.of("tasks.csv");
         try {
-            if (Files.exists(file)) {
-                Files.delete(file);
+            if (Files.exists(file.toPath())) {
+                Files.delete(file.toPath());
             }
-            Files.createFile(file);
+            Files.createFile(file.toPath());
         } catch (IOException e) {
             throw new ManagerSaveException(e.getMessage());
         }
         try (FileWriter fileWriter = new FileWriter(String.valueOf(file), StandardCharsets.UTF_8);
-             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-            bufferedWriter.write("id,type,name,status,description,epic");
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+            bufferedWriter.write(HEADER);
             bufferedWriter.newLine();
 
             for (Task task : getAListOfTasks()) {
@@ -56,7 +60,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    public void loadFromFile(File file) {
+    public static FileBackedTaskManager loadFromFile(File file) {
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(historyManager, file);
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file,
                 StandardCharsets.UTF_8))) {
             String line;
@@ -64,21 +69,26 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 if (line.isEmpty()) {
                     break;
                 }
-                if (!line.equals("id,type,name,status,description,epic")) {
+                if (!line.equals(HEADER)) {
                     Task task = fromString(line);
-
                     if (task instanceof Epic) {
-                        createEpic((Epic) task);
+                        fileBackedTaskManager.createEpic((Epic) task);
                     } else if (task instanceof Subtask) {
-                        createSubtask((Subtask) task);
+                        fileBackedTaskManager.createSubtask((Subtask) task);
+                    } else if (task instanceof Task){
+                        fileBackedTaskManager.createTask(task);
                     } else {
-                        createTask(task);
+                        String historyLine = bufferedReader.readLine();
+                        for (int id : historyFromString(historyLine)) {
+                            historyManager.add(task);
+                        }
                     }
                 }
             }
         } catch (IOException e) {
             throw new ManagerSaveException(e.getMessage());
         }
+        return fileBackedTaskManager;
     }
 
     @Override
