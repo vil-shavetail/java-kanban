@@ -101,7 +101,7 @@ public class Main {
         System.out.println(tm.getHistory());
 
         Path path = Path.of("tasks.csv");
-        FileBackedTaskManager fbtm = new FileBackedTaskManager(Managers.getDefaultHistory(), new File(String.valueOf(path)));
+        FileBackedTaskManager fbtm = new FileBackedTaskManager(new File(String.valueOf(path)));
         System.out.println("We are at the step one: " + fbtm.getAListOfTasks());
         Task first = fbtm.createTask(new Task("ТЗ-9", "Реализация технического задания четвертого спринта"));
         FileBackedTaskManager.loadFromFile(new File(String.valueOf(path)));

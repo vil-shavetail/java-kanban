@@ -11,13 +11,11 @@ import java.util.Objects;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
-    private static HistoryManager historyManager;
     private final File file;
     private static final String HEADER = "id,type,name,status,description,epic";
 
-    public FileBackedTaskManager(HistoryManager historyManager, File file) {
-        super(historyManager);
-        FileBackedTaskManager.historyManager = historyManager;
+    public FileBackedTaskManager(File file) {
+        super(Managers.getDefaultHistory());
         this.file = file;
     }
 
@@ -61,7 +59,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     public static FileBackedTaskManager loadFromFile(File file) {
-        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(historyManager, file);
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file,
                 StandardCharsets.UTF_8))) {
             String line;
@@ -80,7 +78,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     } else {
                         String historyLine = bufferedReader.readLine();
                         for (int id : historyFromString(historyLine)) {
-                            historyManager.add(task);
+                            fileBackedTaskManager.getHistory().add(task);
                         }
                     }
                 }

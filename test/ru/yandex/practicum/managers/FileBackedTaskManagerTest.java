@@ -12,7 +12,7 @@ class FileBackedTaskManagerTest {
 
     @Test
     void testCheckThatFileCreated() {
-        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(Managers.getDefaultHistory(), new File("tasks.csv"));
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(new File("tasks.csv"));
         fileBackedTaskManager.createTask(new Task("ТЗ-", "Реализация технического задания пятого спринта"));
         Assertions.assertTrue(Files.exists(Path.of("tasks.csv")));
     }
@@ -20,7 +20,7 @@ class FileBackedTaskManagerTest {
     @Test
     void testLoadFromANonExistentFile() {
         Path path = Path.of("test.csv");
-        new FileBackedTaskManager(Managers.getDefaultHistory(), path.toFile());
+        new FileBackedTaskManager(path.toFile());
         try {
             FileBackedTaskManager.loadFromFile(path.toFile());
         } catch (ManagerSaveException e) {
@@ -31,7 +31,7 @@ class FileBackedTaskManagerTest {
     @Test
     void testLoadFromAnExistentFile() {
         Path path = Path.of("savedTask.csv");
-        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(Managers.getDefaultHistory(), new File("savedTask.csv"));
+        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(new File("savedTask.csv"));
         try {
             fileBackedTaskManager = FileBackedTaskManager.loadFromFile(new File("savedTask.csv"));
             Assertions.assertEquals(1, fileBackedTaskManager.getAListOfTasks().size());
