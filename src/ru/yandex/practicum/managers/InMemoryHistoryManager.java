@@ -5,7 +5,6 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-
     private final HandMadeHistoryLinkedList handMadeHistoryLinkedList = new HandMadeHistoryLinkedList();
 
     @Override

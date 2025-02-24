@@ -9,7 +9,7 @@ class ManagersTest {
 
     @BeforeAll
     static void createManagers() {
-        taskManager = Managers.getDefault();
+        taskManager = Managers.getDefault(historyManager);
         historyManager = Managers.getDefaultHistory();
     }
 
@@ -19,7 +19,7 @@ class ManagersTest {
         Assertions.assertNotNull(taskManager, "Object TaskManager didn't create!");
         Assertions.assertInstanceOf(InMemoryTaskManager.class, taskManager, "Created taskManager" +
                 "is not an instance of the InMemoryTaskManager class.");
-        Assertions.assertEquals(0, taskManager.getHistory().size(), "TaskManager is not " +
+        Assertions.assertEquals(0, historyManager.getHistory().size(), "TaskManager is not " +
                 "ready. Method getHistory() was not called.");
     }
 

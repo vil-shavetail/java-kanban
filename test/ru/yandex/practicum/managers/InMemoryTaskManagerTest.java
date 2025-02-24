@@ -16,7 +16,7 @@ class InMemoryTaskManagerTest {
 
     @BeforeEach
     void createTasksOfAllTypes() {
-        taskManager = Managers.getDefault();
+        taskManager = Managers.getDefault(Managers.getDefaultHistory());
         taskManager.createTask(new Task("ТЗ-3", "Реализация технического задания третьего спринта"));
         taskManager.createEpic(new Epic("Переезд", "Большая задача по перезду"));
         taskManager.createSubtask(new Subtask("Подготовка", "Подготовка к пеерезду", 2));
