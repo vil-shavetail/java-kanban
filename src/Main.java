@@ -61,7 +61,7 @@ public class Main {
         System.out.println();
         tm.printTasksOfAllTypes();
         tm.update(new Task(6, "ТЗ-4", "Реализация технического задания четвертого спринта", TaskStatus.IN_PROGRESS,
-                LocalDateTime.of(2024, 10, 15, 10, 25, 45 ),
+                LocalDateTime.of(2024, 10, 15, 10, 25, 45),
                 Duration.ofMinutes(90)));
         tm.createEpic(new Epic("Переезд", "Большая задача по перезду"));
         tm.createSubtask(new Subtask("Подготовка", "Подготовка к пеерезду", 7));
