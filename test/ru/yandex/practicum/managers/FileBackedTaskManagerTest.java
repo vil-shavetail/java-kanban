@@ -13,7 +13,7 @@ class FileBackedTaskManagerTest {
     @Test
     void testCheckThatFileCreated() {
         FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(new File("tasks.csv"));
-        fileBackedTaskManager.createTask(new Task("ТЗ-", "Реализация технического задания пятого спринта"));
+        fileBackedTaskManager.createTask(new Task("ТЗ-1", "Реализация технического задания пятого спринта"));
         Assertions.assertTrue(Files.exists(Path.of("tasks.csv")));
     }
 

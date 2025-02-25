@@ -1,4 +1,4 @@
-id,type,name,status,description,epic
-1,TASK,ТЗ-4,NEW,Реализация технического задания четвертого спринта,
+id,type,name,status,description,startTime,duration,epic
+1,TASK,ТЗ-4,NEW,Реализация технического задания четвертого спринта,2025-02-25T10:39:16.897387,PT0S,
 
 
