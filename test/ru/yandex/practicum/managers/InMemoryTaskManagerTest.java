@@ -8,6 +8,8 @@ import ru.yandex.practicum.tasks.Subtask;
 import ru.yandex.practicum.tasks.Task;
 import ru.yandex.practicum.tasks.TaskStatus;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 class InMemoryTaskManagerTest {
@@ -70,15 +72,18 @@ class InMemoryTaskManagerTest {
     @Test
     void updateTaskOfAllTypes() {
         taskManager.update(new Task(1, "ТЗ-3", "Реализация технического задания третьего спринта",
-                TaskStatus.IN_PROGRESS));
-        taskManager.update(new Subtask(3, "Подготовка", "Подготовка к пеерезду",
-                TaskStatus.DONE, 2));
+                TaskStatus.IN_PROGRESS, LocalDateTime.of(2024, 10, 11, 15, 40 ),
+                Duration.ofMinutes(45)));
+        taskManager.update(new Subtask(3, "Подготовка", "Подготовка к пеерезду", TaskStatus.DONE,
+                LocalDateTime.of(2024, 10, 11, 15, 40 ),
+                Duration.ofMinutes(45),2));
 
         Assertions.assertEquals(TaskStatus.IN_PROGRESS, taskManager.getTaskById(1).getStatus());
         Assertions.assertEquals(TaskStatus.DONE, taskManager.getSubtaskById(3).getStatus());
         Assertions.assertEquals(TaskStatus.IN_PROGRESS, taskManager.getEpicById(2).getStatus());
         taskManager.update(new Epic(2, "Переезд", "Большая задача по перезду", TaskStatus.DONE,
-                taskManager.getEpicById(2).getSubs()));
+                LocalDateTime.of(2024, 10, 11, 15, 40 ),
+                Duration.ofMinutes(45), taskManager.getEpicById(2).getSubs()));
         Assertions.assertEquals(TaskStatus.DONE, taskManager.getEpicById(2).getStatus());
     }
 

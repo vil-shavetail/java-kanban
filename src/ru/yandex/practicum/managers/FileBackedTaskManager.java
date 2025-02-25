@@ -5,6 +5,8 @@ import ru.yandex.practicum.tasks.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +14,7 @@ import java.util.Objects;
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final File file;
-    private static final String HEADER = "id,type,name,status,description,epic";
+    private static final String HEADER = "id,type,name,status,description,startTime,duration,epic";
 
     public FileBackedTaskManager(File file) {
         super(Managers.getDefaultHistory());
@@ -189,7 +191,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     String toString(Task task) {
         String taskString;
         taskString = String.join(",", Integer.toString(task.getId()), getTaskType(task).toString(),
-                task.getTitle(), task.getStatus().toString(), task.getDescription(), getEpicId(task));
+                task.getTitle(), task.getStatus().toString(), task.getDescription(), task.getStartTime().toString(),
+                task.getDuration().toString(), getEpicId(task));
         return taskString;
     }
 
@@ -197,14 +200,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String[] taskAttributes = value.split(",");
         if (taskAttributes[1].equals((TaskType.TASK).toString())) {
             return new Task(Integer.parseInt(taskAttributes[0]), taskAttributes[2],
-                    taskAttributes[4], TaskStatus.valueOf(taskAttributes[3]));
+                    taskAttributes[4], TaskStatus.valueOf(taskAttributes[3]),
+                    LocalDateTime.parse(taskAttributes[5]), Duration.parse(taskAttributes[6]));
         } else if (taskAttributes[1].equals((TaskType.EPIC).toString())) {
             return new Epic(Integer.parseInt(taskAttributes[0]), taskAttributes[2],
-                    taskAttributes[4], TaskStatus.valueOf(taskAttributes[3]));
+                    taskAttributes[4], TaskStatus.valueOf(taskAttributes[3]),
+                    LocalDateTime.parse(taskAttributes[5]), Duration.parse(taskAttributes[6]));
         } else {
             return new Subtask(Integer.parseInt(taskAttributes[0]), taskAttributes[2],
                     taskAttributes[3], TaskStatus.valueOf(taskAttributes[4]),
-                    Integer.parseInt(taskAttributes[5]));
+                    LocalDateTime.parse(taskAttributes[5]), Duration.parse(taskAttributes[6]),
+                    Integer.parseInt(taskAttributes[7]));
         }
 
     }
