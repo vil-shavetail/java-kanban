@@ -121,8 +121,8 @@ public class Main {
         System.out.println("Task: " + fbtm.getTaskById(second.getId()));
         FileBackedTaskManager.loadFromFile(new File(String.valueOf(path)));
         System.out.println("We are at the step three" + fbtm.getAListOfTasks());
-//        System.out.println("Task: " + fbtm.getTaskById(first.getId()));
-//        System.out.println("Task: " + fbtm.getTaskById(second.getId()));
+        System.out.println("Task: " + fbtm.getTaskById(first.getId()));
+        System.out.println("Task: " + fbtm.getTaskById(second.getId()));
         System.out.println("History: " + fbtm.getHistory());
         System.out.println("Приоритизация: " + fbtm.getPrioritizedTasks());
     }

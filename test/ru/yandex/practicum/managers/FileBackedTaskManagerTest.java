@@ -8,7 +8,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-class FileBackedTaskManagerTest {
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
 
     @Test
     void testCheckThatFileCreated() {
@@ -21,11 +21,9 @@ class FileBackedTaskManagerTest {
     void testLoadFromANonExistentFile() {
         Path path = Path.of("test.csv");
         new FileBackedTaskManager(path.toFile());
-        try {
+        Assertions.assertThrows(ManagerSaveException.class, () -> {
             FileBackedTaskManager.loadFromFile(path.toFile());
-        } catch (ManagerSaveException e) {
-            Assertions.assertEquals("test.csv (No such file or directory)", e.getMessage());
-        }
+        }, "test.csv (No such file or directory)");
     }
 
     @Test
