@@ -111,10 +111,19 @@ public class Main {
         Path path = Path.of("tasks.csv");
         FileBackedTaskManager fbtm = new FileBackedTaskManager(new File(String.valueOf(path)));
         System.out.println("We are at the step one: " + fbtm.getAListOfTasks());
-        Task first = fbtm.createTask(new Task("ТЗ-9", "Реализация технического задания четвертого спринта"));
+        Task first = fbtm.createTask(new Task(1, "ТЗ-9", "Реализация технического задания четвертого спринта", TaskStatus.NEW,
+                LocalDateTime.of(2024, 10, 15, 10, 25, 45),
+                Duration.ofMinutes(25)));
+        Task second = fbtm.createTask(new Task(2, "ТЗ-8", "Реализация технического задания четвертого спринта", TaskStatus.NEW,
+                LocalDateTime.of(2024, 10, 15, 10, 10, 45),
+                Duration.ofMinutes(5)));
+        System.out.println("Task: " + fbtm.getTaskById(first.getId()));
+        System.out.println("Task: " + fbtm.getTaskById(second.getId()));
         FileBackedTaskManager.loadFromFile(new File(String.valueOf(path)));
         System.out.println("We are at the step three" + fbtm.getAListOfTasks());
-        System.out.println("Task: " + fbtm.getTaskById(first.getId()));
+//        System.out.println("Task: " + fbtm.getTaskById(first.getId()));
+//        System.out.println("Task: " + fbtm.getTaskById(second.getId()));
         System.out.println("History: " + fbtm.getHistory());
+        System.out.println("Приоритизация: " + fbtm.getPrioritizedTasks());
     }
 }
