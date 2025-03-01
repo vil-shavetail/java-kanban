@@ -197,7 +197,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteAllEpics() {
         if (!epics.isEmpty()) {
-            for (Epic epic : epics.values()){
+            for (Epic epic : epics.values()) {
                 for (int sub : epic.getSubs()) {
                     prioritizedTasks.remove(subtasks.get(sub));
                     removeTaskFromHistoryById(subtasks.get(sub).getId());
