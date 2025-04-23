@@ -89,7 +89,7 @@ public class BaseHttpHandler implements HttpHandler {
         sendText(h, "Задача пересекается с существующей",406);
     }
 
-    protected enum Endpoint {GET_TASKS, GET_TASK_BY_ID, POST_TASK, DELETE_TASK, GET_SUBTASK_BY_EPIC_ID, GET_HISTORY, GET_PRIORITIZATION, UNKNOWN}
+    protected enum Endpoint { GET_TASKS, GET_TASK_BY_ID, POST_TASK, DELETE_TASK, GET_SUBTASK_BY_EPIC_ID, GET_HISTORY, GET_PRIORITIZATION, UNKNOWN }
 
     private Endpoint getEndpoint(String requestPath, String requestMethod) {
         String[] pathParts = requestPath.split("/");
