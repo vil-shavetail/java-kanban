@@ -4,15 +4,22 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import ru.yandex.practicum.adapters.DurationTypeAdapter;
+import ru.yandex.practicum.adapters.LocalDateTimeTypeAdapter;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class BaseHttpHandler implements HttpHandler {
 
     protected static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
-    protected Gson gson = new GsonBuilder().create();
+    protected Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+            .registerTypeAdapter(Duration.class, new DurationTypeAdapter())
+            .create();
 
     @Override
     public void handle(HttpExchange h) throws IOException {
@@ -105,6 +112,45 @@ public class BaseHttpHandler implements HttpHandler {
                 return Endpoint.GET_TASKS;
             } else if (requestMethod.equals("POST")) {
                 return Endpoint.POST_TASK;
+            }
+        } else if (pathParts.length == 2 && pathParts[1].equals("epics")) {
+            if (requestMethod.equals("GET")) {
+                return Endpoint.GET_TASKS;
+            } else if (requestMethod.equals("POST")) {
+                return Endpoint.POST_TASK;
+            }
+        }  else if (pathParts.length == 2 && pathParts[1].equals("history")) {
+            if (requestMethod.equals("GET")) {
+                return Endpoint.GET_HISTORY;
+            }
+        } else if (pathParts.length == 2 && pathParts[1].equals("prioritized")) {
+            if (requestMethod.equals("GET")) {
+                return Endpoint.GET_PRIORITIZATION;
+            }
+        } else if (pathParts.length == 3 && pathParts[1].equals("tasks")) {
+            if (requestMethod.equals("GET")) {
+                return Endpoint.GET_TASK_BY_ID;
+            }
+            if (requestMethod.equals("DELETE")) {
+                return Endpoint.DELETE_TASK;
+            }
+        } else if (pathParts.length == 3 && pathParts[1].equals("subtasks")) {
+            if (requestMethod.equals("GET")) {
+                return Endpoint.GET_TASK_BY_ID;
+            }
+            if (requestMethod.equals("DELETE")) {
+                return Endpoint.DELETE_TASK;
+            }
+        } else if (pathParts.length == 3 && pathParts[1].equals("epics")) {
+            if (requestMethod.equals("GET")) {
+                return Endpoint.GET_TASK_BY_ID;
+            }
+            if (requestMethod.equals("DELETE")) {
+                return Endpoint.DELETE_TASK;
+            }
+        } else if (pathParts.length == 4 && pathParts[1].equals("epics")) {
+            if (requestMethod.equals("GET")) {
+                return Endpoint.GET_SUBTASK_BY_EPIC_ID;
             }
         }
         return Endpoint.UNKNOWN;

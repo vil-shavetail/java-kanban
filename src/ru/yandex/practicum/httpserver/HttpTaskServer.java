@@ -13,7 +13,7 @@ public class HttpTaskServer {
     private static final int PORT = 8080;
     private final HttpServer httpServer;
 
-    HttpTaskServer(TaskManager tm) {
+    public HttpTaskServer(TaskManager tm) {
         try {
             httpServer = HttpServer.create(new InetSocketAddress(PORT), 0);
         } catch (IOException e) {
