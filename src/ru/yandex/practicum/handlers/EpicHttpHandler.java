@@ -8,10 +8,8 @@ import java.io.IOException;
 
 public class EpicHttpHandler extends BaseHttpHandler {
 
-    TaskManager tm;
-
     public EpicHttpHandler(TaskManager tm) {
-        this.tm = tm;
+        super.tm = tm;
     }
 
     @Override

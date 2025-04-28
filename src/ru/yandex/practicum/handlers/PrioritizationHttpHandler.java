@@ -7,10 +7,8 @@ import java.io.IOException;
 
 public class PrioritizationHttpHandler extends BaseHttpHandler {
 
-    TaskManager tm;
-
     public PrioritizationHttpHandler(TaskManager tm) {
-        this.tm = tm;
+        super.tm = tm;
     }
 
     @Override

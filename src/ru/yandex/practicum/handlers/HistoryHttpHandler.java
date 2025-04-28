@@ -7,10 +7,8 @@ import java.io.IOException;
 
 public class HistoryHttpHandler extends BaseHttpHandler {
 
-    TaskManager tm;
-
     public HistoryHttpHandler(TaskManager tm) {
-        this.tm = tm;
+        super.tm = tm;
     }
 
     @Override

@@ -8,10 +8,8 @@ import java.io.IOException;
 
 public class SubtaskHttpHandler extends BaseHttpHandler {
 
-    public TaskManager tm;
-
     public SubtaskHttpHandler(TaskManager tm) {
-        this.tm = tm;
+        super.tm = tm;
     }
 
     @Override

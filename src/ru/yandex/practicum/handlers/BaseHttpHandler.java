@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import ru.yandex.practicum.adapters.DurationTypeAdapter;
 import ru.yandex.practicum.adapters.LocalDateTimeTypeAdapter;
+import ru.yandex.practicum.managers.TaskManager;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 
 public class BaseHttpHandler implements HttpHandler {
 
+    TaskManager tm;
     protected static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     protected Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
